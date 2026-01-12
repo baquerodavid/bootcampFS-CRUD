@@ -1,10 +1,27 @@
-const express = require('express');
+const express = require("express");
 const app = express();
+const routes = require("./routes/userRoutes");
+const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let usuarios = [
+app.get("/", (req, res) => res.redirect("/usuarios"));
+app.use("/usuarios", routes);
+
+app.use((req, res) =>
+  res.status(404).json({ mensaje: "404 - La página no existe" })
+);
+
+app.listen(PORT, () =>
+  console.log(
+    `El servidor está escuchando en el puerto http://localhost:${PORT} `
+  )
+);
+
+// 👇 CODIGO MÍO DEL CHALLENGE EMPIEZA DESDE AQUÍ (solo lo de este archivo app.js) 👇
+
+/* let usuarios = [
   { id: 1, nombre: "Ryu", edad: 32, lugarProcedencia: "Japón" },
   { id: 2, nombre: "Chun-Li", edad: 29, lugarProcedencia: "China" },
   { id: 3, nombre: "Guile", edad: 35, lugarProcedencia: "Estados Unidos" },
@@ -62,3 +79,4 @@ app.post('/usuarios', (req, res) => {
 app.listen(3000, () => {
   console.log("Express está escuchando en el puerto 3000");
 });
+*/
